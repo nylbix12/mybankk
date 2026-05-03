@@ -1,0 +1,7 @@
+parameters:
+    level: 3
+    paths:
+        - skeleton/src
+        - skeleton/tests
+    bootstrapFiles:
+        - skeleton/vendor/autoload.php
