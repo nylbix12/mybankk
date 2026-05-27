@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,6 +16,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/api/auth', name: 'api_auth_')]
 class AuthController extends AbstractController
 {
+    #[Route('/login', name: 'login', methods: ['POST'])]
+    public function login(): JsonResponse
+    {
+        // Intercepted by the json_login security authenticator — never reached directly
+        throw new \LogicException('This should not be reached.');
+    }
+
     #[Route('/register', name: 'register', methods: ['POST'])]
     public function register(
         Request $request,
@@ -45,7 +53,12 @@ class AuthController extends AbstractController
 
         $user->setPassword($hasher->hashPassword($user, $data['password']));
         $em->persist($user);
-        $em->flush();
+
+        try {
+            $em->flush();
+        } catch (UniqueConstraintViolationException) {
+            return $this->json(['errors' => ['email' => 'This email address is already in use.']], 422);
+        }
 
         return $this->json(
             json_decode($serializer->serialize($user, 'json', ['groups' => ['user:read']])),

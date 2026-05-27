@@ -18,14 +18,17 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
+# Installer les dépendances SANS exécuter les scripts post-install
+# (bin/console n'existe pas encore à cette étape)
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
+# Copier tout le code source
 COPY . .
 
-RUN mkdir -p config/jwt && \
-    openssl genrsa -aes256 -passout env:JWT_PASSPHRASE -out config/jwt/private.pem 4096 && \
-    openssl rsa -pubout -passin env:JWT_PASSPHRASE -in config/jwt/private.pem -out config/jwt/public.pem
+# Regénérer l'autoload et vider le cache maintenant que bin/console existe
+RUN composer dump-autoload --no-dev --optimize && \
+    php bin/console cache:clear --env=prod --no-debug || true
 
 RUN chown -R www-data:www-data var/
 
