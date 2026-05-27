@@ -1,0 +1,41 @@
+@use '../../styles/variables' as *;
+
+.stat-card {
+  background: $white;
+  border-radius: $radius-lg;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: $card-shadow;
+  flex: 1;
+  min-width: 0;
+
+  &__label {
+    font-size: 0.8rem;
+    color: $text-gray;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  &__value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: $text-dark;
+
+    &--accent { color: $teal; }
+  }
+
+  &__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: $radius-md;
+    background: $teal-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    color: $teal;
+  }
+}
