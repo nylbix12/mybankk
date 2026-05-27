@@ -1,0 +1,23 @@
+@use '../../styles/variables' as *;
+
+.color-picker {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+
+  &__swatch {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2.5px solid transparent;
+    transition: transform 0.15s, border-color 0.15s;
+
+    &:hover { transform: scale(1.1); }
+
+    &--active {
+      border-color: $text-dark;
+      transform: scale(1.15);
+      box-shadow: 0 0 0 2px $white, 0 0 0 4px currentColor;
+    }
+  }
+}
