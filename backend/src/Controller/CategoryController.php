@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\OperationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,6 +36,7 @@ class CategoryController extends AbstractController
 
         $category = new Category();
         $category->setTitle($data['title'] ?? '');
+        $category->setColor($data['color'] ?? '#00C49A');
         $category->setUser($this->getUser());
 
         $errors = $validator->validate($category);
@@ -68,8 +70,12 @@ class CategoryController extends AbstractController
         }
 
         $data = json_decode($request->getContent(), true);
+
         if (isset($data['title'])) {
             $category->setTitle($data['title']);
+        }
+        if (isset($data['color'])) {
+            $category->setColor($data['color']);
         }
 
         $errors = $validator->validate($category);
@@ -89,10 +95,26 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    public function delete(Category $category, EntityManagerInterface $em): JsonResponse
-    {
+    public function delete(
+        Category $category,
+        EntityManagerInterface $em,
+        OperationRepository $operationRepo
+    ): JsonResponse {
         if ($category->getUser() !== $this->getUser()) {
             return $this->json(['error' => 'Forbidden'], 403);
+        }
+
+        $operationCount = count($operationRepo->findBy(['category' => $category]));
+        if ($operationCount > 0) {
+            return $this->json([
+                'error' => 'cannot_delete',
+                'message' => sprintf(
+                    'You can\'t delete "%s" because it contains %d operation%s. Reassign or delete them first.',
+                    $category->getTitle(),
+                    $operationCount,
+                    $operationCount > 1 ? 's' : ''
+                ),
+            ], 422);
         }
 
         $em->remove($category);

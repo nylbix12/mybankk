@@ -22,6 +22,10 @@ class Category
     #[Groups(['category:read', 'operation:read'])]
     private ?string $title = null;
 
+    #[ORM\Column(length: 7)]
+    #[Groups(['category:read', 'operation:read'])]
+    private string $color = '#00C49A';
+
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'categories')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -30,6 +34,9 @@ class Category
 
     public function getTitle(): ?string { return $this->title; }
     public function setTitle(string $title): static { $this->title = $title; return $this; }
+
+    public function getColor(): string { return $this->color; }
+    public function setColor(string $color): static { $this->color = $color; return $this; }
 
     public function getUser(): ?User { return $this->user; }
     public function setUser(?User $user): static { $this->user = $user; return $this; }
