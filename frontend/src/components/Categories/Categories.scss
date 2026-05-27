@@ -1,0 +1,125 @@
+@use '../../styles/variables' as *;
+
+/* ── Category Card ── */
+.cat-card {
+  background: $white;
+  border: 1.5px solid $border;
+  border-radius: $radius-lg;
+  padding: 1.25rem 1.25rem 1rem;
+  transition: box-shadow 0.15s;
+
+  &:hover { box-shadow: $card-shadow; }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  &__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: $text-dark;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  &__btn {
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    opacity: 0.45;
+    transition: opacity 0.15s;
+    padding: 0.15rem;
+
+    &:hover { opacity: 1; }
+    &--del:hover { opacity: 1; }
+  }
+
+  &__stats {
+    font-size: 0.825rem;
+    color: $text-gray;
+    padding-left: 1.35rem;
+  }
+}
+
+/* ── Category modal form ── */
+.cat-modal__form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+
+  label { font-size: 0.875rem; font-weight: 600; color: $text-dark; }
+
+  input {
+    border: 1.5px solid $border;
+    border-radius: $radius-sm;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.95rem;
+    font-family: $font;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus { border-color: $teal; box-shadow: 0 0 0 3px rgba($teal, 0.12); }
+  }
+}
+
+.cat-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* ── Delete/warning modals (shared with operations) ── */
+.delete-modal {
+  text-align: center;
+
+  &__icon {
+    font-size: 2rem;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+
+    &--red   { background: rgba($red, 0.1); }
+    &--amber { background: rgba($amber, 0.12); }
+  }
+
+  &__text {
+    font-size: 0.95rem;
+    color: $text-gray;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+
+    strong { color: $text-dark; }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
