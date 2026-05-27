@@ -194,7 +194,7 @@
   font-weight: 700;
   transition: background 0.2s;
 
-  &:hover:not(:disabled) { background: darken(#00C49A, 6%); }
+  &:hover:not(:disabled) { background: #009e7d; }
   &:disabled { opacity: 0.55; cursor: not-allowed; }
 }
 
@@ -209,7 +209,7 @@
   font-weight: 700;
   transition: background 0.2s;
 
-  &:hover { background: darken(#ef4444, 8%); }
+  &:hover { background: #dc2626; }
 }
 
 @media (max-width: 768px) {
