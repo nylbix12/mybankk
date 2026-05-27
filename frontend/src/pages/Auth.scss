@@ -1,0 +1,138 @@
+@use '../styles/variables' as *;
+
+.auth-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  &__panel {
+    background: $teal-dark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+  }
+
+  &__tagline {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: $white;
+    text-align: center;
+    line-height: 1.2;
+    max-width: 360px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 5rem;
+    background: $white;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: $text-dark;
+      margin: 0.25rem 0 0.5rem;
+    }
+  }
+
+  &__brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $teal-dark;
+    margin-bottom: 0.25rem;
+  }
+
+  &__subtitle {
+    color: $text-gray;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  &__footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: $text-gray;
+
+    a { color: $teal; font-weight: 600; }
+  }
+}
+
+.auth-error {
+  background: rgba(239,68,68,0.08);
+  color: $red;
+  border-radius: $radius-sm;
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-dark;
+  }
+
+  input, select {
+    border: 1.5px solid $border;
+    border-radius: $radius-sm;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.95rem;
+    font-family: $font;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+    background: $white;
+    color: $text-dark;
+
+    &::placeholder { color: #c4c8cf; }
+
+    &:focus {
+      border-color: $teal;
+      box-shadow: 0 0 0 3px rgba(0,196,154,0.12);
+    }
+  }
+}
+
+.field-error {
+  font-size: 0.78rem;
+  color: $red;
+  margin-top: 0.15rem;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.85rem;
+  background: $teal;
+  color: $white;
+  border: none;
+  border-radius: $radius-sm;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: $font;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, opacity 0.2s;
+  margin-top: 0.5rem;
+
+  &:hover:not(:disabled) { background: darken(#00C49A, 5%); }
+  &:disabled { opacity: 0.55; cursor: not-allowed; }
+}
+
+@media (max-width: 768px) {
+  .auth-layout {
+    grid-template-columns: 1fr;
+
+    &__panel { min-height: 200px; padding: 2rem; }
+    &__tagline { font-size: 1.75rem; }
+    &__form { padding: 2.5rem 1.75rem; }
+  }
+}
