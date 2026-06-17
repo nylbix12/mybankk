@@ -58,13 +58,13 @@ jobs:
           JWT_PASSPHRASE: test_passphrase
         run: php bin/console doctrine:migrations:migrate --no-interaction
 
-      - name: Run tests
+      - name: Run integration tests
         working-directory: ./backend
         env:
           DATABASE_URL: mysql://mybank:mybank@127.0.0.1:3306/mybank_test?serverVersion=8.0.32&charset=utf8mb4
           APP_ENV: test
           JWT_PASSPHRASE: test_passphrase
-        run: php bin/phpunit || echo "No tests found"
+        run: php bin/phpunit --testdox
 
   frontend:
     name: Frontend (React)
